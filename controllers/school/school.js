@@ -50,7 +50,7 @@ exports.updateAllSchool = async (req, res, next) =>{
 } ;
 exports.getSchoolById = async (req, res, next) => {
   try {
-    const allSchool = await client.query(`Select* from school where id=${req.params.id}`);
+    const allSchool = await client.query(`Select* from school where school_id=${req.params.id}`);
     res.status(200).json({
       success: true,
       message: "school data by id is retrieved. ",
@@ -63,7 +63,7 @@ exports.getSchoolById = async (req, res, next) => {
 };
 exports.deleteSchoolById = async (req, res, next) => {
     try {
-      const allSchool = await client.query (`delete from school where id=${req.params.id}`);
+      const allSchool = await client.query (`delete from school where school_id=${req.params.id}`);
       res.status(200).json({
         success: true,
         message: "data is deleted from school db.",
