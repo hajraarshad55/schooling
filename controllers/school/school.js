@@ -1,8 +1,8 @@
 const client = require("../../connection");
 
-exports.getAllSchool = async (req, res, next) => {
+exports.getSchoolData = async (req, res, next) => {
   try {
-    const allSchool = await client.query(`Select* from school`);
+    const allSchool = await client.query(`Select* from abc.schools`);
     res.status(200).json({
       success: true,
       message: "table of school is:",
@@ -13,11 +13,11 @@ exports.getAllSchool = async (req, res, next) => {
   }
   client.end;
 };
-exports.postAllSchool = async (req, res, next) =>{
+exports.postDataIntoSchools = async (req, res, next) =>{
   try{
-    const {school_id,name,description,class_id} = req.body;
-    await client.query(`insert into school(school_id,name,description,class_id) 
-    values('${school_id}','${name}','${description}','${class_id}')`)
+    const {name,c_id} = req.body;
+    await client.query(`insert into abc.schools(name,c_id) 
+    values('${name}','${c_id}')`)
     res.status(200).json({
       success: true,
       message: "data is inserted."
@@ -27,17 +27,15 @@ exports.postAllSchool = async (req, res, next) =>{
   }
   client.end;
 } ;
-exports.updateAllSchool = async (req, res, next) =>{
+exports.updateSchoolData = async (req, res, next) =>{
   try{
-    const {name,description,class_id,school_id} = req.body;
+    const {name,c_id} = req.body;
     
-    await client.query(`update school
+    await client.query(`update abc.schools
                          set
-                         
-                         class_id='${class_id}',
                          name = '${name}',
-                         description = '${description}'
-                         where school_id = ${req.params.id}`
+                         c_id = '${c_id}'
+                         where id = ${req.params.id}`
 )
     res.status(200).json({
       success: true,
@@ -48,9 +46,9 @@ exports.updateAllSchool = async (req, res, next) =>{
   }
   client.end;
 } ;
-exports.getSchoolById = async (req, res, next) => {
+exports.getSchoolDataById = async (req, res, next) => {
   try {
-    const allSchool = await client.query(`Select* from school where school_id=${req.params.id}`);
+    const allSchool = await client.query(`Select* from abc.schools where id=${req.params.id}`);
     res.status(200).json({
       success: true,
       message: "school data by id is retrieved. ",
@@ -61,9 +59,9 @@ exports.getSchoolById = async (req, res, next) => {
   }
   client.end;
 };
-exports.deleteSchoolById = async (req, res, next) => {
+exports.deleteSchoolDataById = async (req, res, next) => {
     try {
-      const allSchool = await client.query (`delete from school where school_id=${req.params.id}`);
+      const allSchool = await client.query (`delete from abc.schools where id=${req.params.id}`);
       res.status(200).json({
         success: true,
         message: "data is deleted from school db.",
@@ -74,20 +72,5 @@ exports.deleteSchoolById = async (req, res, next) => {
     }
     client.end;
   };
-  exports.getClasses = async (req, res, next) => {
-    try {
-      const allSchool = await client.query(`select school.class_id ,classes.class_name 
-      FROM classes
-      INNER JOIN school  ON classes.school_id = school.school_id
-       
-      where school.school_id=${req.params.id}`);
-      res.status(200).json({
-        success: true,
-        message: "9 and 10 classes are retrieved",
-        data: allSchool.rows,
-      });
-    } catch (err) {
-      return res.status(400).json({ success: false, message: err.message });
-    }
-    client.end;
-  };
+ 
+  

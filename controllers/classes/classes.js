@@ -1,8 +1,8 @@
 const client = require("../../connection");
 
-exports.getClasses = async (req, res, next) => {
+exports.getClassesData = async (req, res, next) => {
   try {
-    const allClasses = await client.query(`Select* from classes`);
+    const allClasses = await client.query(`Select* from abc.classes`);
     res.status(200).json({
       success: true,
       message: "classes data is given as:",
@@ -13,11 +13,11 @@ exports.getClasses = async (req, res, next) => {
   }
   client.end;
 };
-exports.postClasses = async (req, res, next) =>{
+exports.postClassesData = async (req, res, next) =>{
   try{
-    const {class_id,class_name,department_id,school_id} = req.body;
-    await client.query(`insert into classes(class_id,class_name,department_id,school_id) 
-    values('${class_id}','${class_name}','${department_id}','${school_id}')`)
+    const {name,s_id} = req.body;
+    await client.query(`insert into abc.classes(name,s_id) 
+    values('${name}','${s_id}')`)
     res.status(200).json({
       success: true,
       message: "new data is inserted"
@@ -27,33 +27,31 @@ exports.postClasses = async (req, res, next) =>{
   }
   client.end;
 } ;
-exports.updateClasses = async (req, res, next) =>{
+exports.updateClassesData = async (req, res, next) =>{
   try{
-    const {class_name,department_id,school_id} = req.body;
+    const {name,s_id} = req.body;
     
-    await client.query(`update classes
-                         set 
-                         school_id='${school_id}',
-                         class_name = '${class_name}',
-                         
-                         department_id = '${department_id}'
-                         where class_id = ${req.params.id}`
+    await client.query(`update abc.classes
+                         set
+                         name = '${name}',
+                         s_id = '${s_id}'
+                         where id = ${req.params.id}`
 )
     res.status(200).json({
       success: true,
-      message: "classes are updated "
+      message: "classes data is  updated "
     });
   } catch (err) {
     return res.status(400).json({ success: false, message: err.message });
   }
   client.end;
 } ;
-exports.getClassesById = async (req, res, next) => {
+exports.getClassesDataById = async (req, res, next) => {
   try {
-    const allUsers = await client.query(`Select* from classes where class_id=${req.params.id}`);
+    const allUsers = await client.query(`Select* from abc.classes where id=${req.params.id}`);
     res.status(200).json({
       success: true,
-      message: "the specfic id users ",
+      message: "data of specific id: ",
       data: allUsers.rows[0],
     });
   } catch (err) {
@@ -63,10 +61,10 @@ exports.getClassesById = async (req, res, next) => {
 };
 exports.deleteClassesById = async (req, res, next) => {
     try {
-      const allClasses = await client.query (`delete from classes where class_id=${req.params.id}`);
+      const allClasses = await client.query (`delete from abc.classes where id=${req.params.id}`);
       res.status(200).json({
         success: true,
-        message: "data is deleted.",
+        message: "data is deleted from classes database",
         //data: allRoles.rows,
       });
     } catch (err) {
@@ -74,19 +72,19 @@ exports.deleteClassesById = async (req, res, next) => {
     }
     client.end;
   };
-  exports.getBooks = async (req, res, next) => {
+  exports.getEightAndNinthClassData = async (req, res, next) => {
     try {
-      const allClasses = await client.query(`SELECT classes.class_id, books.name
-      FROM classes
-      JOIN books ON classes.class_id = books.c_id
-      WHERE c_id = ${req.params.id}`);
+      
+      const allSchool = await client.query(`   SELECT *
+      FROM abc.classes
+      WHERE name IN ('eight class','ninth class')`);
       res.status(200).json({
         success: true,
-        message: "books of six class are given as:",
-        data: allClasses.rows,
+        message: "8 and 9 classes data is retrieved",
+        data: allSchool.rows,
       });
     } catch (err) {
       return res.status(400).json({ success: false, message: err.message });
     }
     client.end;
-  };
+  };

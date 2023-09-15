@@ -7,23 +7,27 @@ const router = express.Router();
 const classesController = require("../schoolingsystem/controllers/classes/classes.js");
 const booksController = require("../schoolingsystem/controllers/books/books.js");
 //const router = express.Router();
-router.get("/getAllSchool", schoolController.getAllSchool);
-router.post("/postALLschool", schoolController.postAllSchool);
-router.put("/updateALLSchool/:id", schoolController.updateAllSchool);
-router.get("/getSchoolById/:id", schoolController.getSchoolById);
-router.delete("/deleteSchoolById/:id", schoolController.deleteSchoolById);
-router.get("/getClasses/:id", schoolController.getClasses);
- 
-router.get("/getClasses", classesController.getClasses);
-router.post("/postClasses", classesController.postClasses);
-router.put("/updateClasses/:id", classesController.updateClasses);
-router.get("/getClassesById/:id", classesController.getClassesById);
-router.delete("/deleteClassesById/:id", classesController.deleteClassesById)
-router.get("/getBooks/:id", classesController.getBooks);
+router.get("/getSchoolData", schoolController.getSchoolData);
+router.post("/postDataIntoSchools", schoolController.postDataIntoSchools);
+router.put("/updateSchoolData/:id", schoolController.updateSchoolData);
+router.get("/getSchoolDataById/:id", schoolController.getSchoolDataById);
+router.delete("/deleteSchoolDataById/:id", schoolController.deleteSchoolDataById);
 
-router.get("/getBooks", booksController.getBooks);
-router.get("/getBooksById/:id", booksController.getBooksById)
-router.post("/postBooks", booksController.postBooks);
-router.put("/updateBooks/:id", booksController.updateBooks);
-router.delete("/deleteBooksById/:id", booksController.deleteBooksById)
+
+ 
+router.get("/getClassesData", classesController.getClassesData);
+router.post("/postClassesData", classesController.postClassesData);
+router.put("/updateClassesData/:id", classesController.updateClassesData);
+router.get("/getClassesDataById/:id", classesController.getClassesDataById);
+router.delete("/deleteClassesById/:id", classesController.deleteClassesById);
+router.get("/getEightAndNinthClassData", classesController.getEightAndNinthClassData);
+
+
+router.get("/getBooksData", booksController.getBooksData);
+router.get("/getBooksDataById/:id", booksController.getBooksDataById)
+router.post("/postBooksData", booksController.postBooksData);
+router.put("/updateBooksData/:id", booksController.updateBooksData);
+router.delete("/deleteBooksDataById/:id", booksController.deleteBooksDataById)
+router.get("/getBooksOfNinthClass/:id", booksController.getBooksOfNinthClass);
 module.exports = router;
+
